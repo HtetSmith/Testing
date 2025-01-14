@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="jumbotron">
+    <h2>Please Login:</h2>
+    <h3>(Must be Superuser, please check with the site admin)</h3>
+    {% if form.error%}
+        <p>Your username and password didn't match! Please try again.</p>
+    {% endif %}
+
+    <form action="{%url 'custom_login_view'%}" method = "POST">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+          <input type="text" name="username" placeholder="Username">
+
+          <label for="password"></label>
+          <input type="password" name="password">
+
+           <input type="submit" class='btn btn-primary'  value="Login">
+           <input type="hidden" name="next" value="{{next}}">
+    </form>
+</div>
+{% endblock content %}

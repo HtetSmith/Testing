@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Register</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+            {{ user_form.username }}
+
+            <label for="email">Email:</label>
+            {{ user_form.email }}
+
+            <label for="role">Role:</label>
+            {{ user_form.role }}
+
+            <label for="password">Password:</label>
+            {{ user_form.password1 }}
+
+            <!-- Profile Form Fields -->
+            <label for="profile_photo">Profile Photo:</label>
+            {{ profile_form.profile_photo }}
+
+            <label for="country">Country:</label>
+            {{ profile_form.country }}
+
+            <label for="region">Region:</label>
+            {{ profile_form.region }}
+
+            <label for="phone_number">Phone Number:</label>
+            {{ profile_form.phone_number }}
+
+            <label for="linked_accounts">Linked Accounts:</label>
+            {{ profile_form.linked_accounts }}
+        <button type="submit">Register</button>
+    </form>
+</div>
+{% endblock content %}

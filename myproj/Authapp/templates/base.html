@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        form textarea {
+            width: 70%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class = "navbar navbar-default techfont custom-navbar">
+        <div class="container">
+            <ul class = "nav navbar-nav">
+                <li><a href="{% url 'post_list' %}" class="navbar-brand bigbrand">Media List</a></li>
+                <li>
+                    <a href="{%url 'post_create' %}" class="navbar-link bigbrand">New Post</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>
