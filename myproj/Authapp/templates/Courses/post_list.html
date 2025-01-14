@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <div class-"jumbotron">
+        {% for post in mediaitem_list %}
+        <div class="container">
+            <div style="padding-bottom:2%;">{% if post.image %}
+                {% comment %} <p>Image Path: {{ post.image.url }}</p> {% endcomment %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }} image is not working" width="50%" height="80%">
+                <H2><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></H2>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% endblock content %}
+</body>
+</html>

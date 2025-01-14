@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, UserProfile
+from .models import CustomUser, UserProfile, MediaItem
 
 class CustomUserRegistrationForm(UserCreationForm):
     role = forms.ChoiceField(choices=CustomUser.ROLE_CHOICES, required=True)
@@ -15,3 +15,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['profile_photo', 'country', 'region', 'phone_number', 'linked_accounts']
+
+class postform(forms.ModelForm):
+    class Meta():
+        model = MediaItem
+        fields = ('title','description','url','image','video')

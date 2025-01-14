@@ -16,6 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,5 +28,19 @@ urlpatterns = [
     path('login/', custom_login_view,name='custom_login_view'),
 
     path('register/',RegisterView.as_view(),name='register'),
-    path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('logout/', CustomLogoutView, name='logout'),
+
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="accounts/password_reset.html"), name="reset_password"),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="accounts/password_reset_done.html"), name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="accounts/password_reset_complete.html"), name="password_reset_complete")
 ]
+if settings.DEBUG:  # Only serve media files during development
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+'''
+password reset
+1 - submit email form                           //PasswordResetView
+2 - Email sent success message                  //PasswordResetDoneView
+3 - Link to password Reset form in email        //PasswordResetConfirmView
+4 - Password successfully changed message       //PasswordResetCompleteView
+'''

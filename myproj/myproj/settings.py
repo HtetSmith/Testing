@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-8m21)1bvui!&^%301h9$#4x!7$q_4z3&6r9ggo#mw9-jr4evm3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'js2439988@gmail.com']
 
 
 # Application definition
@@ -136,5 +136,25 @@ LOGOUT_REDIRECT_URL = '/'  # Redirect to the homepage or any page of your choice
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#Simple Mail Transfer Protocol(SMTP) configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'js2439988@gmail.com'
+EMAIL_HOST_PASSWORD = 'brzi ampe grdj mrao'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'  # Use 'apikey' as the username
+# EMAIL_HOST_PASSWORD = 'your_sendgrid_api_key'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 

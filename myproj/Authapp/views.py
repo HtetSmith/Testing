@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect
-# Create your views here.
-from django.contrib.auth import authenticate, login
+
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.views.generic import TemplateView
-from django.contrib.auth.views import LogoutView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+
 from django.views import View
-from django.dispatch import receiver
+# from django.dispatch import receiver
 from Authapp.mixin import RoleRequiredMixin
-from django.db.models.signals import post_save
-from Authapp.models import CustomUser, UserProfile
+# from django.db.models.signals import post_save
+from Authapp.models import CustomUser, UserProfile, MediaItem
 from .forms import CustomUserRegistrationForm, UserProfileForm
-from django.urls import reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse, reverse_lazy
+# from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Group
 
 
@@ -70,7 +70,7 @@ def custom_login_view(request):
             messages.error(request, "Invalid email or password. helow")
             return redirect('custom_login_view')
         # next_url = request.POST.get('next', None)  # Update from POST data
-        print(f"User: {user.username}, Password: {user.password},")
+        # print(f"User: {user.username}, Password: {user.password},")
         user = authenticate(request, username=user.username, password=password)
 
 
@@ -96,7 +96,7 @@ def custom_login_view(request):
                 messages.error(request, "You do not have the required permissions.")
                 return redirect('custom_login_view')
         else:
-            messages.error(request, "Invalid email or password. Hellow")
+            messages.info(request, "Invalid email or password.")
             return render(request, 'Login.html', {'email': email})
         
     return render(request, 'Login.html')
@@ -153,11 +153,41 @@ class RegisterView(View):
             'profile_form': profile_form
         })
     
-class CustomLogoutView(LogoutView):
-    def dispatch(self, request, *args, **kwargs):
-        # Add custom logout logic here (optional)
-        messages.success(request, "You have been logged out successfully.")
-        return super().dispatch(request, *args, **kwargs)
+def CustomLogoutView(request):
+    logout(request)
+    return redirect('custom_login_view')
 
+# Classes for course function
 
+class PostListView(RoleRequiredMixin, ListView):
+    model = MediaItem
+    template_name = 'Courses/post_list.html'  # Customize with your template name
+    allowed_roles = ['Student']
 
+class PostDetailView(RoleRequiredMixin, DetailView):
+    model = MediaItem
+    template_name = 'Courses/post_detail.html'
+    allowed_roles = ['Student']
+
+class PostCreateView(RoleRequiredMixin, CreateView):
+    model = MediaItem
+    fields = ['title', 'description', 'image', 'url', 'video']  # Fields to display in the form
+    template_name = 'Courses/post_form.html'
+    success_url = reverse_lazy('post_list')
+    # allowed_roles = ['Admin', 'Instructor']
+    allowed_roles = ['Student']
+
+class PostUpdateView(RoleRequiredMixin, UpdateView):
+    model = MediaItem
+    fields = ['title', 'description', 'image', 'url', 'video']
+    template_name = 'Courses/post_form.html'
+    success_url = reverse_lazy('post_list')
+    # allowed_roles = ['Admin', 'Instructor']
+    allowed_roles = ['Student']
+
+class PostDeleteView(RoleRequiredMixin, DeleteView):
+    model = MediaItem
+    template_name = 'Courses/post_confirm_delete.html'
+    success_url = reverse_lazy('post_list')
+    # allowed_roles = ['Admin', 'Instructor']
+    allowed_roles = ['Student']

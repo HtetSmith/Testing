@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+<body>
+    {% block content %}
+    <div class="jumbotron">
+         <div class="container">
+        <h1>Add New Course</h1>
+        <form method="POST" action="" class="post-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit" class="save btn btn-primary" name="button">Save</button>
+        </form>
+    </div>
+    </div>
+    {% endblock content %}

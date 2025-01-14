@@ -27,3 +27,16 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
+
+
+class MediaItem(models.Model):
+    title = models.CharField(max_length=255)  # Title of the media
+    description = models.TextField(blank=True, null=True)  # Optional description
+    image = models.ImageField(upload_to='courses/images/', blank=True, null=True)  # Image upload
+    video = models.FileField(upload_to='courses/videos/', blank=True, null=True)  # Video upload
+    url = models.URLField(blank=True, null=True)  # URL field for links
+    created_at = models.DateTimeField(auto_now_add=True)  # Auto-add timestamp
+    updated_at = models.DateTimeField(auto_now=True)  # Auto-update timestamp
+
+    def __str__(self):
+        return self.title

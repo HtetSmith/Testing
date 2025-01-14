@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class-"jumbotron">
+    <div class="container">
+        <H1>{{object.title}}</H1>
+        <div>
+            {% if object.video %}
+            <video width="50%" height="80%" controls>
+                <source src="{{ object.video.url }}" type="video/mp4">
+            </video>
+            {% endif %}
+        </div>
+        <div class="description">
+            <p>Description: {{object.description}}</p>
+        </div>
+        <div class="url">
+            <span>Published on: </span><a href="{{ object.url }}">{{ object.url }}</a>
+        </div>
+        
+        <div style="margin-top:1.6%;">
+            <a href="{% url 'post_update' pk=object.id %}" class="save btn btn-default">Edit</a>
+            <a href="{% url 'post_delete' pk=object.id %}" class="save btn btn-danger">Delete</a>
+        </div>
+        
+        <div style="margin-top:1.6%; padding-bottom:2%;">
+            <a href="{% url 'post_list'%}" class="save btn btn-primary">Back to Title_list</a>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock content %}
